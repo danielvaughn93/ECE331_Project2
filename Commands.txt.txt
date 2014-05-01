@@ -1,0 +1,23 @@
+Sqlite3- Commands
+                sqlite3 temp.db 
+                create table templog(date datetime, temp numeric);
+  
+crontab-
+        * * * * * /usr/bin/python /home/pi/project2/temp.py
+
+Installs to get lighttpd going
+        sudo apt-get install lighttpd php5 php5-cgi php5-common php-pear php5-sqlite php5-dev vim
+        sudo /etc/init.d/lighttpd restart
+
+edited sudo vim /etc/modules so that it included
+        i2c-bcm2708
+        i2c-dev
+
+edited /etc/modprobe.d/raspi-blacklist.conf so that i2c wasn't blacklisted
+
+installing i2c stuff
+        sudo apt-get install python-smbus
+        sudo apt-get install i2c-tools
+        sudo adduser pi i2c
+        sudo modprobe i2c-bcm2708
+        sudo shutdown -r now
