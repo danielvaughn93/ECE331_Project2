@@ -3,27 +3,21 @@ import smbus
 import time
 import sqlite3
 
-I2C_ADDRESS = 0x48
+i2cbus = smbus.SMBus(0)
 
-bus = smbus.SMBus(1)
-
-#Set all ports in input mode
-bus.write_byte(I2C_ADDRESS, 0x0)
+#Ports=input mode
+i2cbus.write_byte(0x48, 0x0)
 
 #Read all input lines
-value = bus.read_byte(I2C_ADDRESS)
-print value
-#print "%02X" % value
+temp = i2cbus.read_byte(0x48)
+print temp
 
 
-####################################
-# Store temperature in a database  #
-####################################
-
-connect = sqlite3.connect('/home/pi/ece331/project2/templog.db')
+#Log in database
+connect = sqlite3.connect('/home/pi/project2/temp.db')
 curs=connect.cursor()
 
-curs.execute("INSERT INTO temps values(datetime('now'), (?))", (value,))
+curs.execute("INSERT INTO templog values(datetime('now'), (?))", (temp,))
 
 #commit changes
 connect.commit()
